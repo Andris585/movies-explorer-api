@@ -82,3 +82,7 @@ module.exports.updateUser = (req, res, next) => {
     })
     .catch(next);
 };
+
+module.exports.logout = (_, res) => {
+  res.status(OK).clearCookie('token').send('cookie cleared');
+};
