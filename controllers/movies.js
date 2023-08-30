@@ -8,9 +8,9 @@ const {
 const NotFoundError = require('../utils/errors/NotFoundError');
 const ForbiddenError = require('../utils/errors/ForbiddenError');
 
-module.exports.getMovies = (_, res, next) => {
+module.exports.getMovies = (req, res, next) => {
   Movie
-    .find({})
+    .find({ owner: { $eq: req.user._id } })
     .then((movies) => res.send(movies))
     .catch(next);
 };

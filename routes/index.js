@@ -11,9 +11,8 @@ router.post('/signup', validation.createUser, createUser);
 
 router.post('/signin', validation.login, login);
 
-router.post('/signout', logout);
-
 router.use(auth);
+router.post('/signout', logout);
 router.use(usersRouter);
 router.use(movieRouter);
 

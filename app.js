@@ -3,18 +3,26 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
-const { PORT = 4000, BD_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
+const cors = require('cors');
+const { errors } = require('celebrate');
+const helmet = require('helmet');
+
+const { NODE_ENV } = process.env;
+
+const { PORT = 4000, DB_URL } = process.env;
 
 const app = express();
-const helmet = require('helmet');
-const { errors } = require('celebrate');
-const cors = require('cors');
+
 const limiter = require('./middlewares/limiter');
 const routes = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-mongoose.connect(BD_URL);
+if (NODE_ENV === 'production') {
+  mongoose.connect(DB_URL);
+} else {
+  mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb_dev');
+}
 
 app.use(helmet());
 
