@@ -6,19 +6,25 @@ const cookieParser = require('cookie-parser');
 const { PORT = 4000, BD_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 const app = express();
+const helmet = require('helmet');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const limiter = require('./middlewares/limiter');
 const routes = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 mongoose.connect(BD_URL);
 
+app.use(helmet());
+
 app.use(express.json());
 
 app.use(cors({ credentials: true }));
 
 app.use(cookieParser());
+
+app.use(limiter);
 
 app.use(requestLogger);
 
