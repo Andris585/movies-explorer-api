@@ -28,7 +28,7 @@ app.use(helmet());
 
 app.use(express.json());
 
-app.use(cors({ credentials: true, origin: 'https://movie585.nomoredomainsrocks.ru' }));
+app.use(cors({ credentials: true, origin: 'https://movie585.nomoredomainsrocks.ru', exposedHeaders: ['set-cookie'] }));
 
 app.use(cookieParser());
 
