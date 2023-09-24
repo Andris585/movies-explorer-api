@@ -21,7 +21,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
 
       res.cookie('token', token, {
-        maxAge: 36000000, httpOnly: true, credentials: true, domain: 'movie585.nomoredomainsrocks.ru', path: '/', sameSite: 'none', secure: true,
+        maxAge: 36000000, httpOnly: true, credentials: true, domain: '*', path: '/', sameSite: 'none', secure: true,
       }).status(OK).send({ message: 'Вы авторизовались' });
     })
     .catch(next);
